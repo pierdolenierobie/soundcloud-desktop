@@ -26,7 +26,7 @@ class api:
         self._rpc.run()
 
     def set_song_data(self, data):
-        # i dont know what im even doing at this point alr?
+        # i dont know what im even doing at this point alr??
         
         self.song_data["is_paused"] =           data["is_paused"]
 
