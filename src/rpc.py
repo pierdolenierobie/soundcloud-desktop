@@ -18,8 +18,8 @@ class rpc:
 
         else:
 
-            start_t = time.time() + data['curr_time']['minutes']  * 60 + data['curr_time']['seconds']
-            end_t = time.time() + data['ttal_time']['minutes'] * 60 + data['ttal_time']['seconds']
+            start_t = time.time()   + data['curr_time']['minutes']  * 60 + data['curr_time']['seconds']
+            end_t = time.time()     + data['ttal_time']['minutes'] * 60 + data['ttal_time']['seconds']
 
             if len(data['title']) < 2:
                 data['title'] += "⠀⠀⠀"
