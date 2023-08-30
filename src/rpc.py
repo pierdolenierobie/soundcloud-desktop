@@ -20,7 +20,13 @@ class rpc:
 
             start_t = time.time() + data['curr_time']['minutes']  * 60 + data['curr_time']['seconds']
             end_t = time.time() + data['ttal_time']['minutes'] * 60 + data['ttal_time']['seconds']
-           
+
+            if len(data['title']) < 2:
+                data['title'] += "⠀⠀⠀"
+
+            if len(data['author']) < 2:
+                data['author'] += "⠀⠀⠀"
+
             self.RPC.update(
                 large_image     = data['img'], 
                 state           = data['title'], 
