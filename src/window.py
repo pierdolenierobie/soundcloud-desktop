@@ -1,48 +1,45 @@
 import time
-from src.rpc import rpc
 
-class api:
+class win:
 
     def __init__(self):
+        pass
+    
+    def worker(self, window):
 
-        self.song_data = {
-            "is_paused":    None,
-            "img":          None,
-            "title":        None,
-            "author":       None,
-            "song_url":     None,
-            "curr_time":    {
-                "minutes":  None,
-                "seconds":  None
-            },
-            "ttal_time":    {
-                "minutes":  None,
-                "seconds":  None
-            }
-        }
+        while True:
+            window.evaluate_js('''
 
-        
-        self._rpc = rpc()
-        self._rpc.run()
+                var playControl     = document.querySelector(".playControl");
+                var is_paused       = playControl.className.includes('playing') ? false : true
 
-    def set_song_data(self, data):
-        # i dont know what im even doing at this point alr?
-        
-        self.song_data["is_paused"] = data["is_paused"]
+                var img             = document.querySelector(".sc-artwork-4x").style.backgroundImage.slice(4, -1).replace(/"/g, "").replaceAll("50", "500");
 
-        self.song_data["ttal_time"]['minutes'] = int(data['ttal_time']['minutes']) - int(data['curr_time']['minutes'])
-        self.song_data["ttal_time"]['seconds'] = int(data['ttal_time']['seconds']) - int(data['curr_time']['seconds'])
-        
-        
-        if self.song_data['author'] is None or self.song_data['author'] != data['author']:
-            
+                var author          = document.querySelector(".playbackSoundBadge__lightLink").innerHTML;
 
-            self.song_data["img"]                   = data["img"]
-            self.song_data["title"]                 = data["title"]
-            self.song_data["author"]                = data["author"]
-            self.song_data["song_url"]              = data["song_url"]
-            
-            self.song_data["curr_time"]['minutes']  = int(data['curr_time']['minutes']) 
-            self.song_data["curr_time"]['seconds']  = int(data['curr_time']['seconds'])          
-            
-        self._rpc.update(self.song_data)
+                var song_url        = document.querySelector(".playbackSoundBadge__titleLink").href;
+                var title           = document.querySelector(".playbackSoundBadge__titleLink > span:nth-child(2)").innerHTML;
+
+                var curr_time       = document.querySelector(".playbackTimeline__timePassed > span:nth-child(2)").innerHTML.split(":");
+                var ttal_time       = document.querySelector(".playbackTimeline__duration > span:nth-child(2)").innerHTML.split(":");
+
+                var data = {
+                    is_paused:  is_paused,
+                    song_url:   song_url,
+                    author:     author,
+                    title:      title, 
+                    img:        img, 
+                    curr_time: {
+                        minutes: curr_time[0],
+                        seconds: curr_time[1]
+                    },
+                    ttal_time:{
+                        minutes: ttal_time[0],
+                        seconds: ttal_time[1]
+                    },
+                };
+              
+                pywebview.api.set_song_data(data)
+
+            ''')
+            time.sleep(1)
