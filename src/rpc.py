@@ -28,7 +28,6 @@ class RPC:
 
                 self.RPC.update(
                     large_image         = data['cover'], 
-                    large_text          = 'github.com/payratted',
                     state               = data['title'], 
                     details             = data['author'],
                     buttons             = [{"label": "Listen along", "url": data['url']}],
@@ -39,6 +38,5 @@ class RPC:
             else:
                 self.RPC.update(
                     large_image         = 'logo', 
-                    large_text          = 'github.com/payratted',
                     state               = 'Discovering...'
                 ) 
